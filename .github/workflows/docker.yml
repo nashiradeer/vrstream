@@ -43,7 +43,7 @@ jobs:
         with:
           context: ./authentication
           push: true
-          file: ./Dockerfile
+          file: ./authentication/Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 

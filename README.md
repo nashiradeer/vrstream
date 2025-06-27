@@ -2,6 +2,12 @@
 
 Self-host your own streaming service to play anything you want on VRChat.
 
+## Installation
+
+This project has been created to be used in Docker Swarm mode, compiling directly inside the production environment, you can do this by running the following command: `docker stack deploy -c docker-compose.yml vrstream`.
+
+This project hasn't been tested in Docker Compose mode, Kubernetes or in bare metal environments.
+
 ## Configuration
 
 This project has HTTPS enabled by default using Cloudflare Origin CA and Cloudflare proxy. If don't want to use Cloudflare or HTTPS you will need to manually edit the `nginx.conf` and `docker-compose.yml` files.

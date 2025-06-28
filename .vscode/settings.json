@@ -9,10 +9,12 @@
     "nashiradeer",
     "nginx",
     "nopush",
+    "quic",
     "realip",
     "referer",
     "rtmp",
     "sendfile",
-    "vrstream"
+    "vrstream",
+    "youshallnotpass"
   ]
 }

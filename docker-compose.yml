@@ -1,46 +1,39 @@
 services:
-  reverse-proxy:
+  nginx:
     build:
       context: .
       dockerfile: nginx.Dockerfile
     volumes:
-      - vrstream-live:/usr/share/nginx/hls
+      - live:/usr/share/nginx/hls
       - nginx-logs:/var/log/nginx
-    network_mode: host
-    secrets:
-      - source: cloudflare-cert
-        target: cert
-      - source: cloudflare-key
-        target: key
+    ports:
+      - "1935:1935/tcp"
+      - "8080:80/tcp"
     configs:
       - source: nginx-config
         target: /etc/nginx/nginx.conf
-        # This config is used to make NGINX trust on Cloudflare proxy.
-      - source: nginx-cloudflare-proxy
-        target: /etc/nginx/conf.d/cloudflare-proxy.conf
+    networks:
+      - auth-network
 
-  vrstream:
+  auth:
     build:
       context: ./authentication
       dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-
-secrets:
-  cloudflare-cert:
-    external: true
-  cloudflare-key:
-    external: true
+    configs:
+      - source: auth-config
+        target: /vrstream.yml
+    networks:
+      - auth-network
 
 configs:
   nginx-config:
     file: ./nginx.conf
-  # This config is used to make NGINX trust on Cloudflare proxy.
-  nginx-cloudflare-proxy:
-    file: ./cloudflare-proxy.conf
-  vrstream-config:
+  auth-config:
     file: ./vrstream.yml
 
 volumes:
-  vrstream-live:
+  live:
   nginx-logs:
+
+networks:
+  auth-network:

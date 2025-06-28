@@ -1,0 +1,4 @@
+listen: :5000
+users:
+  - username: admin
+    password: youshallnotpass
